@@ -52,5 +52,19 @@ public class PolicyHandler {
         }
         
     }
+    
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverQuickShipped_OrderStatus(@Payload QuickShipped quickShipped){
+
+          if (quickShipped.isMe()) {
+            System.out.println("##### listener OrderStatus : " + quickShipped.toJson());
+
+            Order order = new Order();
+            order.setId(quickShipped.getOrderId());
+            order.setStatus("QuickShipped");
+
+            orderRepository.save(order);
+        }
+    }
 
 }
