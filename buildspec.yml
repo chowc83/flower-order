@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "flower-order"
+    _PROJECT_NAME: "admin-flower-order"
 
 phases:
   install:
