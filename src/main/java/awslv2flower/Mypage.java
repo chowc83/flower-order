@@ -14,7 +14,6 @@ public class Mypage {
         private String flowerName;
         private Integer qty;
         private String status;
-        private Long price;
 
 
         public Long getId() {
@@ -51,13 +50,6 @@ public class Mypage {
 
         public void setStatus(String status) {
             this.status = status;
-        }
-        public Long getPrice() {
-            return price;
-        }
-
-        public void setPrice(Long price) {
-            this.price = price;
         }
 
 }

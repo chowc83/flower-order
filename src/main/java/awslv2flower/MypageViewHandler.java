@@ -101,7 +101,7 @@ public class MypageViewHandler {
                 for(Mypage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     mypage.setStatus(paymentConfirmed.getStatus());
-                    mypage.setPrice(paymentConfirmed.getPrice());
+                    
                     // view 레파지 토리에 save
                     mypageRepository.save(mypage);
                 }
@@ -136,6 +136,40 @@ public class MypageViewHandler {
                 for(Mypage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     mypage.setStatus(shipCancelled.getStatus());
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenQuickRequested_then_UPDATE_7(@Payload QuickRequested quickRequested) {
+        try {
+            if (quickRequested.isMe()) {
+                // view 객체 조회
+                List<Mypage> mypageList = mypageRepository.findByOrderId(quickRequested.getOrderId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setStatus(quickRequested.getStatus());
+                    // view 레파지 토리에 save
+                    mypageRepository.save(mypage);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenQuickShipped_then_UPDATE_8(@Payload QuickShipped quickShipped) {
+        try {
+            if (quickShipped.isMe()) {
+                // view 객체 조회
+                List<Mypage> mypageList = mypageRepository.findByOrderId(quickShipped.getOrderId());
+                for(Mypage mypage : mypageList){
+                    // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setStatus(quickShipped.getStatus());
                     // view 레파지 토리에 save
                     mypageRepository.save(mypage);
                 }
